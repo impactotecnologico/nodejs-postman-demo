@@ -2,8 +2,8 @@ var express      = require('express');        // call express
 var bodyParser   = require('body-parser');
 var mongoose     = require('mongoose');
 var config       = require('./app/config');
-var routes       = require('./app/routes/usuarios');
-
+require('./app/models/usuario.js');
+require('./app/models/producto.js');
 
 var app          = express();
 
@@ -29,7 +29,6 @@ mongoose.connect(config.dbUrl, options).then(
     err => { console.log("Error conectando" , err); }
   );
 
-
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'error connecting with mongodb database:'));
 
@@ -45,7 +44,11 @@ db.on('disconnected', function () {
 
 var port = process.env.PORT || 8051; 
 
-app.use('/usuarios', routes);
+var usuariosRoutes= require('./app/routes/usuarios');
+var productosRoutes= require('./app/routes/productos');
+
+app.use('/usuarios', usuariosRoutes);
+app.use('/productos', productosRoutes);
 
 
 app.listen(port);
