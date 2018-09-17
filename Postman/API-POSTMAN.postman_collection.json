@@ -1,0 +1,394 @@
+{
+	"info": {
+		"_postman_id": "bfa12e64-346e-49d4-a13a-3d6016d06694",
+		"name": "API-POSTMAN",
+		"description": "Colección para pruebas de la API para el curso de POSTMAN",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "POST - usuarios - 201",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f592c8ee-dc49-4f96-907c-2d6183352f65",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"id_usuario\", jsonData._id);",
+									"",
+									"pm.test(\"Registro exitoso\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,200]);",
+									"});",
+									"",
+									"pm.test(\"Tiempo de respuesta\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"var schema = {",
+									"    \"type\" : \"object\",",
+									"        properties: {",
+									"          \"nombre\":{",
+									"              \"type\":\"string\"",
+									"            },",
+									"          \"apellido\":{",
+									"              \"type\":\"string\"",
+									"          },",
+									"          \"_id\":{",
+									"              \"type\":\"string\"",
+									"          },",
+									"          \"dni\":{",
+									"              \"type\":\"string\"",
+									"          },",
+									"          \"email\":{",
+									"              \"type\":\"string\"",
+									"          },",
+									"          \"password\":{",
+									"            \"type\":\"string\"",
+									"          },",
+									"          \"__v\":{",
+									"            \"type\":\"integer\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"pm.test(\"schema\", function() {",
+									"    pm.expect(tv4.validate(pm.response.json(), schema, false, true), tv4.error).to.be.true;",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Nombre\",\n\t\"apellido\":\"Apellido\",\n\t\"dni\":\"ABC123D\",\n\t\"email\":\"prueba@yopmail.com\",\n\t\"password\":\"123456\"\n}"
+						},
+						"url": {
+							"raw": "{{url_base}}usuarios",
+							"host": [
+								"{{url_base}}usuarios"
+							]
+						},
+						"description": "Registro de nuevo usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT - usuarios - 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0925c894-19ad-4438-8aa0-77e0f98ce711",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Nombre editado\",\n\t\"apellido\":\"Apellido editado\",\n\t\"dni\":\"ABC123D\",\n\t\"email\":\"prueba@yopmail.com\",\n\t\"password\":\"123456\"\n}"
+						},
+						"url": {
+							"raw": "{{url_base}}usuarios/{{id_usuario}}",
+							"host": [
+								"{{url_base}}usuarios"
+							],
+							"path": [
+								"{{id_usuario}}"
+							]
+						},
+						"description": "Registro de nuevo usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "GET - usuarios - 200",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Nombre\",\n\t\"apellido\":\"Apellido\",\n\t\"dni\":\"ABC123D\",\n\t\"email\":\"prueba@yopmail.com\",\n\t\"password\":\"123456\"\n}"
+						},
+						"url": {
+							"raw": "{{url_base}}usuarios/{{id_usuario}}",
+							"host": [
+								"{{url_base}}usuarios"
+							],
+							"path": [
+								"{{id_usuario}}"
+							]
+						},
+						"description": "Registro de nuevo usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - usuarios - 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c89401c1-48b8-4521-8fa3-075a24dd54de",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}usuarios/{{id_usuario}}",
+							"host": [
+								"{{url_base}}usuarios"
+							],
+							"path": [
+								"{{id_usuario}}"
+							]
+						},
+						"description": "Registro de nuevo usuario"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "POST - productos - 201",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1717d9e8-ceb1-4137-9dd1-b7e01d3027a3",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"id_producto\", jsonData._id);",
+									"",
+									"pm.test(\"Registro exitoso\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,200]);",
+									"});",
+									"",
+									"pm.test(\"Tiempo de respuesta\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"var schema = {",
+									"    \"type\" : \"object\",",
+									"        properties: {",
+									"          \"nombre\":{",
+									"              \"type\":\"string\"",
+									"            },",
+									"          \"descripcion\":{",
+									"              \"type\":\"string\"",
+									"          },",
+									"          \"_id\":{",
+									"              \"type\":\"string\"",
+									"          },",
+									"          \"stock\":{",
+									"              \"type\":\"integer\"",
+									"          },",
+									"          \"precio_unitario\":{",
+									"              \"type\":\"integer\"",
+									"          },",
+									"          \"__v\":{",
+									"            \"type\":\"integer\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"pm.test(\"schema\", function() {",
+									"    pm.expect(tv4.validate(pm.response.json(), schema, false, true), tv4.error).to.be.true;",
+									"})"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Producto\",\n\t\"descripcion\":\"Descripción\",\n\t\"stock\":10,\n\t\"precio_unitario\":100\n}"
+						},
+						"url": {
+							"raw": "{{url_base}}productos",
+							"host": [
+								"{{url_base}}productos"
+							]
+						},
+						"description": "Registro de nuevo usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT - productos - 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf76bba6-9488-4b63-b987-69360cf1e155",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Producto editado\",\n\t\"descripcion\":\"Descripción editada\",\n\t\"stock\":10,\n\t\"precio_unitario\":100\n}"
+						},
+						"url": {
+							"raw": "{{url_base}}productos/{{id_producto}}",
+							"host": [
+								"{{url_base}}productos"
+							],
+							"path": [
+								"{{id_producto}}"
+							]
+						},
+						"description": "Registro de nuevo usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "GET - productos - 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf76bba6-9488-4b63-b987-69360cf1e155",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Producto editado\",\n\t\"descripcion\":\"Descripción editada\",\n\t\"stock\":10,\n\t\"precio_unitario\":100\n}"
+						},
+						"url": {
+							"raw": "{{url_base}}productos/{{id_producto}}",
+							"host": [
+								"{{url_base}}productos"
+							],
+							"path": [
+								"{{id_producto}}"
+							]
+						},
+						"description": "Registro de nuevo usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - productos - 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf76bba6-9488-4b63-b987-69360cf1e155",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}productos/{{id_producto}}",
+							"host": [
+								"{{url_base}}productos"
+							],
+							"path": [
+								"{{id_producto}}"
+							]
+						},
+						"description": "Registro de nuevo usuario"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
