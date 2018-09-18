@@ -15,7 +15,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f592c8ee-dc49-4f96-907c-2d6183352f65",
+								"id": "0e8e1f98-3065-4a6f-9ca0-ac127bce0b7b",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = pm.response.json();",
@@ -28,6 +28,19 @@
 									"",
 									"pm.test(\"Tiempo de respuesta\", function () {",
 									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"checkmail = function(){",
+									"emailRegex = /^(?:[^<>()[\\].,;:\\s@\"]+(\\.[^<>()[\\].,;:\\s@\"]+)*|\"[^\\n\"]+\")@(?:[^<>()[\\].,;:\\s@\"]+\\.)+[^<>()[\\]\\.,;:\\s@\"]{2,63}$/i;",
+									"    if (emailRegex.test(jsonData.email)) {",
+									"        return true;",
+									"    } else {",
+									"        return false;",
+									"    }",
+									"}",
+									"",
+									"pm.test(\"validar email\", function(){",
+									"    pm.expect(checkmail()).to.be.true;",
 									"});",
 									"",
 									"var schema = {",
@@ -60,6 +73,16 @@
 									"pm.test(\"schema\", function() {",
 									"    pm.expect(tv4.validate(pm.response.json(), schema, false, true), tv4.error).to.be.true;",
 									"})"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6db8ab41-d58d-414b-98db-5b6b748f9094",
+								"type": "text/javascript",
+								"exec": [
+									""
 								]
 							}
 						}
