@@ -4,6 +4,7 @@ var mongoose     = require('mongoose');
 var config       = require('./app/config');
 require('./app/models/usuario.js');
 require('./app/models/producto.js');
+require('./app/models/pedido.js');
 
 var app          = express();
 
@@ -23,6 +24,8 @@ const options = {
     socketTimeoutMS: 45000, 
     useNewUrlParser: true
   };
+
+  console.log(config.dbUrl);
 
 mongoose.connect(config.dbUrl, options).then(
     () => { console.log("Conectado"); },
@@ -46,10 +49,11 @@ var port = process.env.PORT || 8051;
 
 var usuariosRoutes= require('./app/routes/usuarios');
 var productosRoutes= require('./app/routes/productos');
+var pedidosRoutes= require('./app/routes/pedidos');
 
 app.use('/usuarios', usuariosRoutes);
 app.use('/productos', productosRoutes);
-
+app.use('/pedidos', pedidosRoutes);
 
 app.listen(port);
 console.log("Server started at " + port);

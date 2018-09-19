@@ -33,4 +33,4 @@ var Pedido = new Schema({
 	}
 });
 
-module.exports = mongoose.model('Usuario', Usuario);
+module.exports = mongoose.model('Pedido', Pedido);

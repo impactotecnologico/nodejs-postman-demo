@@ -5,6 +5,15 @@ networks:
     driver: bridge
  
 services:
+ #newman:
+ # image: postman/newman_ubuntu1404
+ # ports:
+  #  - "91:80"
+  #networks:
+   # - prodnetwork
+  #depends_on:
+   # - jenkins
+
  jenkins:
   image: jenkins
   ports:

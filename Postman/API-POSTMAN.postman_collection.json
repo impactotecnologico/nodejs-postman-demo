@@ -412,6 +412,235 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "POST - pedidos - 201",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eb13a0ee-6971-4ebf-8480-defa5ba8da81",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"id_pedido\", jsonData._id);",
+									"",
+									"pm.test(\"Registro exitoso\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,200]);",
+									"});",
+									"",
+									"pm.test(\"Tiempo de respuesta\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"var schema = {",
+									"    \"type\" : \"object\",",
+									"        properties: {",
+									"          \"nro\":{",
+									"              \"type\":\"integer\"",
+									"            },",
+									"          \"usuario\":{",
+									"              \"type\":\"string\"",
+									"          },",
+									"          \"_id\":{",
+									"              \"type\":\"string\"",
+									"          },",
+									"          \"fecha_ultima_actualizacion\":{",
+									"              \"type\":\"date\"",
+									"          },",
+									"          \"productos\":{",
+									"              \"type\":\"array\"",
+									"          },",
+									"          \"__v\":{",
+									"            \"type\":\"integer\"",
+									"        },",
+									"          \"total\":{",
+									"             \"type\":\"integer\"",
+									"        },",
+									"          \"estatus\":{",
+									"              \"type\":\"boolean\"",
+									"        },",
+									"          \"fecha_finalizacion\":{",
+									"              \"type\":\"date\"",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"pm.test(\"schema\", function() {",
+									"    pm.expect(tv4.validate(pm.response.json(), schema, false, true), tv4.error).to.be.true;",
+									"})"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1a8a94e4-b283-48c3-8116-f10379b71d29",
+								"type": "text/javascript",
+								"exec": [
+									"var nro = Math.floor((Math.random() * 1000) + 1);",
+									"var date = new Date();",
+									"pm.environment.set(\"nro_pedido\", nro);",
+									"pm.environment.set(\"date\", date);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nro\": \"{{nro_pedido}}\",\n\t\"usuario\": \"{{id_usuario}}\",\n\t\"productos\": [\"{{id_producto}}\"],\n\t\"fecha_ultima_actualizacion\": \"{{date}}\",\n\t\"total\":0,\n\t\"estatus\":true,\n\t\"fecha_finalizacion\":null\n}"
+						},
+						"url": {
+							"raw": "{{url_base}}pedidos",
+							"host": [
+								"{{url_base}}pedidos"
+							]
+						},
+						"description": "Registro de nuevo usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "PUT - pedidos - 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf76bba6-9488-4b63-b987-69360cf1e155",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "139b357e-fd4a-4dc8-812d-1ebbc86a2df7",
+								"type": "text/javascript",
+								"exec": [
+									"var date = new Date();",
+									"pm.environment.set(\"date_fin\", date);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nro\": \"{{nro_pedido}}\",\n\t\"usuario\": \"{{id_usuario}}\",\n\t\"productos\": [\"{{id_producto}}\"],\n\t\"fecha_ultima_actualizacion\": \"{{date}}\",\n\t\"total\":0,\n\t\"estatus\":true,\n\t\"fecha_finalizacion\":\"{{date_fin}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url_base}}pedidos/{{id_pedido}}",
+							"host": [
+								"{{url_base}}pedidos"
+							],
+							"path": [
+								"{{id_pedido}}"
+							]
+						},
+						"description": "Registro de nuevo usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "GET - pedidos - 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf76bba6-9488-4b63-b987-69360cf1e155",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\":\"Producto editado\",\n\t\"descripcion\":\"Descripción editada\",\n\t\"stock\":10,\n\t\"precio_unitario\":100\n}"
+						},
+						"url": {
+							"raw": "{{url_base}}pedidos/{{id_pedido}}",
+							"host": [
+								"{{url_base}}pedidos"
+							],
+							"path": [
+								"{{id_pedido}}"
+							]
+						},
+						"description": "Registro de nuevo usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - pedidos - 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf76bba6-9488-4b63-b987-69360cf1e155",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}pedidos/{{id_pedido}}",
+							"host": [
+								"{{url_base}}pedidos"
+							],
+							"path": [
+								"{{id_pedido}}"
+							]
+						},
+						"description": "Registro de nuevo usuario"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
