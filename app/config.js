@@ -1,4 +1,4 @@
 module.exports =
 {
-    dbUrl:"mongodb://ad7148b7acf6/postman-test"
+    dbUrl:"mongodb://localhost/postman-test"
 }
