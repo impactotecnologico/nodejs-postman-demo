@@ -8,5 +8,5 @@ apt-get install nodejs
 npm install -g newman
 
 apt-get update && apt-get install -y mongodb
-mkdir -p data/db
+mkdir -p /data/db
 mongod
