@@ -465,7 +465,7 @@
 									"              \"type\":\"boolean\"",
 									"        },",
 									"          \"fecha_finalizacion\":{",
-									"              \"type\":\"string\"",
+									"              \"type\":\"null\"",
 									"        }",
 									"    }",
 									"};",
