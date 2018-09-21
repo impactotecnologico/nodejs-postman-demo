@@ -1,8 +1,8 @@
-version: '2'
+version: '3'
  
-networks:
-  prodnetwork:
-    driver: bridge
+#networks:
+#  prodnetwork:
+#    driver: bridge
  
 services:
  #newman:
@@ -18,8 +18,9 @@ services:
   image: jenkins/jenkins:lts
   ports:
     - "28080:8080"
-  networks:
-    - prodnetwork
+#  networks:
+#    - prodnetwork
+  container_name: container-jenkins  
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - /usr/local/bin/docker:/usr/bin/docker
@@ -30,8 +31,8 @@ services:
  gitlab:
   image: gitlab/gitlab-ce
   restart: always
-  networks:
-    - prodnetwork
+#  networks:
+#    - prodnetwork
   environment:
     GITLAB_OMNIBUS_CONFIG: |
       # external_url 'https://gitlab.example.com'
@@ -40,6 +41,7 @@ services:
     - "90:80"
     - "443:443"
     - "2222:22"
+  container_name: container-gitlab  
   volumes:
     - /opt/gitlab/config:/etc/gitlab
     - /opt/gitlab/logs:/var/log/gitlab
