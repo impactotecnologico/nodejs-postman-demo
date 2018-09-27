@@ -1,14 +1,31 @@
 var mongoose = require('mongoose');
 var Producto  = mongoose.model('Producto');
+var utils = require('../config');
 
 //GET - Retorna todos los productos
 exports.findAll = function(req, res) {
-	Producto.find(function(err, productos) {
-    if(err) res.send(500, err.message);
+	if(req.query != undefined){
+		var params = utils.filterValidation(req.query);
+	}
 
-	    console.log('GET /productos')
-		res.status(200).jsonp(productos);
-	});
+	var sort_param = params.sort;
+	var order = params.order; 
+
+	if(params.search != null){
+		Producto.find({nombre:params.search}).skip(parseInt(params.skip)).limit(parseInt(params.limit)).sort({sort_param:order}).exec(function(err, productos) {
+			if(err) res.send(500, err.message);
+
+			console.log('GET /productos')
+			res.status(200).jsonp(productos);
+		});
+	}else{
+		Producto.find().skip(parseInt(params.skip)).limit(parseInt(params.limit)).sort({sort_param:order}).exec(function(err, productos) {
+			if(err) res.send(500, err.message);
+
+			console.log('GET /productos')
+			res.status(200).jsonp(productos);
+		});
+	}
 };
 
 //GET - Retorna un producto por ID

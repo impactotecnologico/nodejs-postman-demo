@@ -1,7 +1,6 @@
 var express      = require('express');        // call express
 var bodyParser   = require('body-parser');
 var mongoose     = require('mongoose');
-var config       = require('./app/config');
 require('./app/models/usuario.js');
 require('./app/models/producto.js');
 require('./app/models/pedido.js');
@@ -25,9 +24,8 @@ const options = {
     useNewUrlParser: true
   };
 
-  console.log(config.dbUrl);
 
-mongoose.connect(config.dbUrl, options).then(
+mongoose.connect("mongodb://localhost/postman-test", options).then(
     () => { console.log("Conectado"); },
     err => { console.log("Error conectando" , err); }
   );
@@ -41,7 +39,7 @@ console.log('Connected to mongodb database');
 
 db.on('disconnected', function () {
     //Reconnect on timeout
-    mongoose.connect(config.mongoUrl);
+    mongoose.connect("mongodb://localhost/postman-test");
     db = mongoose.connection;
 });  
 

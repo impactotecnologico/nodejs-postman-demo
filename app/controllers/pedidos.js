@@ -1,14 +1,31 @@
 var mongoose = require('mongoose');
 var Pedido  = mongoose.model('Pedido');
+var utils = require('../config');
 
 //GET - Retorna todos los pedidos
 exports.findAll = function(req, res) {
-	Pedido.find(function(err, pedidos) {
-    if(err) res.send(500, err.message);
+	if(req.query != undefined){
+		var params = utils.filterValidation(req.query);
+	}
 
-	    console.log('GET /pedidos')
-		res.status(200).jsonp(pedidos);
-	});
+	var sort_param = params.sort;
+	var order = params.order; 
+
+	if(params.search != null){
+	Pedido.find({nro:params.search}).skip(parseInt(params.skip)).limit(parseInt(params.limit)).sort({sort_param:order}).exec(function(err, pedidos) {
+		if(err) res.send(500, err.message);
+
+			console.log('GET /pedidos')
+			res.status(200).jsonp(pedidos);
+		});
+	}else{
+		Pedido.find().skip(parseInt(params.skip)).limit(parseInt(params.limit)).sort({sort_param:order}).exec(function(err, pedidos) {
+			if(err) res.send(500, err.message);
+
+			console.log('GET /pedidos')
+			res.status(200).jsonp(pedidos);
+		});
+	}
 };
 
 //GET - Retorna un pedido por ID

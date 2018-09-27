@@ -1,14 +1,33 @@
 var mongoose = require('mongoose');
 var Usuario  = mongoose.model('Usuario');
+var url = require('url');
+var utils = require('../config');
 
 //GET - Retorna todos los usuarios
 exports.findAll = function(req, res) {
-	Usuario.find(function(err, usuarios) {
-    if(err) res.send(500, err.message);
 
-	    console.log('GET /usuarios')
-		res.status(200).jsonp(usuarios);
-	});
+	if(req.query != undefined){
+		var params = utils.filterValidation(req.query);
+	}
+
+	var sort_param = params.sort;
+	var order = params.order; 
+
+	if(params.search != null){
+		Usuario.find({nombre:params.search}).skip(parseInt(params.skip)).limit(parseInt(params.limit)).sort({sort_param:order}).exec(function(err, usuarios) {
+			if(err) res.send(500, err.message);
+
+			console.log('GET /usuarios')
+			res.status(200).jsonp(usuarios);
+		});
+	}else{
+		Usuario.find().skip(parseInt(params.skip)).limit(parseInt(params.limit)).sort({sort:order}).exec(function(err, usuarios) {
+		if(err) res.send(500, err.message);
+
+			console.log('GET /usuarios')
+			res.status(200).jsonp(usuarios);
+		});
+	}
 };
 
 //GET - Retorna un usuario por ID
@@ -65,3 +84,4 @@ exports.delete = function(req, res) {
 		})
 	});
 };
+
