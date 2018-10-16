@@ -101,16 +101,16 @@ exports.patch = function(req, res) {
 					user.nombre   = req.body.nombre;
 				}
 				if (req.body.apellido != undefined){
-					user.apellido   = req.body.nombre;
+					user.apellido   = req.body.apellido;
 				}
 				if (req.body.dni != undefined){
-					user.dni   = req.body.nombre;
+					user.dni   = req.body.dni;
 				}
 				if (req.body.email != undefined){
-					user.email   = req.body.nombre;
+					user.email   = req.body.email;
 				}
 				if (req.body.password != undefined){
-					user.password   = req.body.nombre;
+					user.password   = req.body.password;
 				}
 
 				user.save(function(err) {
