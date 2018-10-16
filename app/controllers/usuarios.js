@@ -64,16 +64,28 @@ exports.update = function(req, res) {
 	Usuario.findById(req.params.id, function(err, user) {
 
 		if (user != null){
-			user.nombre   = req.body.nombre;
-			user.apellido    = req.body.apellido;
-			user.dni = req.body.dni;
-			user.email  = req.body.email;
-			user.password = req.body.password;
 
-			user.save(function(err) {
-				if(err) return res.status(500).send(err.message);
-				res.status(200).jsonp(user);
-			});
+			if (req.body.nombre != undefined &&
+				req.body.apellido != undefined &&
+				req.body.dni != undefined &&
+				req.body.email != undefined &&
+				req.body.password != undefined){
+
+				user.nombre   = req.body.nombre;
+				user.apellido    = req.body.apellido;
+				user.dni = req.body.dni;
+				user.email  = req.body.email;
+				user.password = req.body.password;
+
+				user.save(function(err) {
+					if(err) return res.status(500).send(err.message);
+					res.status(200).jsonp(user);
+				});
+
+			} else {
+				res.status(409).send({"error":"Para actualizar de forma parcial debe usarse PATCH"});
+			}
+			
 		} else {
 			res.status(404).send({"error":"Usuario no encontrado"});
 		}
