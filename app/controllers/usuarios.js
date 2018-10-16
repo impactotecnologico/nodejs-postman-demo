@@ -82,6 +82,52 @@ exports.update = function(req, res) {
 	});
 };
 
+//PATCH - Actualiza un registro de usuario
+exports.patch = function(req, res) {
+	Usuario.findById(req.params.id, function(err, user) {
+
+		if (user != null){
+
+			if (req.body.nombre != undefined &&
+				req.body.apellido != undefined &&
+				req.body.dni != undefined &&
+				req.body.email != undefined &&
+				req.body.password != undefined){
+
+					res.status(409).send({"error":"Para actualizar todo el objeto debe usarse PUT"});
+
+			} else {
+				if (req.body.nombre != undefined){
+					user.nombre   = req.body.nombre;
+				}
+				if (req.body.apellido != undefined){
+					user.apellido   = req.body.nombre;
+				}
+				if (req.body.dni != undefined){
+					user.dni   = req.body.nombre;
+				}
+				if (req.body.email != undefined){
+					user.email   = req.body.nombre;
+				}
+				if (req.body.password != undefined){
+					user.password   = req.body.nombre;
+				}
+
+				user.save(function(err) {
+					if(err) return res.status(500).send(err.message);
+					res.status(200).jsonp(user);
+				});
+			}
+
+			
+		} else {
+			res.status(404).send({"error":"Usuario no encontrado"});
+		}
+
+		
+	});
+};
+
 //DELETE - Elimina un registro de usuario
 exports.delete = function(req, res) {
 	Usuario.findById(req.params.id, function(err, user) {

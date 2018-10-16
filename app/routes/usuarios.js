@@ -10,6 +10,7 @@ router.route('/')
 router.route('/:id')
 .get(UsuarioCtrl.findById)
 .put(UsuarioCtrl.update)
-.delete(UsuarioCtrl.delete);
+.delete(UsuarioCtrl.delete)
+.patch(UsuarioCtrl.patch);
 
 module.exports = router;
