@@ -13,4 +13,7 @@ router.route('/:id')
 .delete(UsuarioCtrl.delete)
 .patch(UsuarioCtrl.patch);
 
+router.route('/login/:email/:pass')
+.get(UsuarioCtrl.login);
+
 module.exports = router;

@@ -155,3 +155,30 @@ exports.delete = function(req, res) {
 	});
 };
 
+function makeid() {
+	var text = "";
+	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  
+	for (var i = 0; i < 50; i++)
+	  text += possible.charAt(Math.floor(Math.random() * possible.length));
+  
+	return text;
+}
+
+
+//LOGIN - retorna un token de usuario
+exports.login = function(req, res) {
+	Usuario.findOne({email: req.params.email,password:req.params.pass}, function(err, user) {
+		
+		if (user != null) {
+
+			console.log('GET /usuarios/' + req.params.email);
+			res.status(200).jsonp({token:makeid()});
+		} else {
+			res.status(401).send({"error":"Usuario no encontrado"});
+		}
+	   
+   
+	});
+};
+
